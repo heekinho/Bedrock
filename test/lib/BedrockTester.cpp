@@ -23,7 +23,7 @@ string BedrockTester::getTempFileName(const string& prefix) {
     string templateStr = "/tmp/" + prefix + "bedrocktest_XXXXXX.db";
     char buffer[100];
     memset(buffer, 0, 100);
-    strcpy(buffer, templateStr.c_str());
+    strncpy(buffer, templateStr.c_str(), templateStr.size() + 1);
     int filedes = mkstemps(buffer, 3);
     close(filedes);
     return buffer;
@@ -250,7 +250,7 @@ string BedrockTester::startServer(bool wait) {
         int count = 0;
         for(string arg : args) {
             char* newstr = (char*)malloc(arg.size() + 1);
-            strcpy(newstr, arg.c_str());
+            strncpy(newstr, arg.c_str(), arg.size() + 1);
             cargs[count] = newstr;
             count++;
         }
